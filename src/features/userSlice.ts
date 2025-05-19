@@ -1,20 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 
-export interface CounterState {
-  value: number;
-  status: 'idle' | 'loading' | 'failed';
-}
-
-const initialState: CounterState = {
-  value: 0,
-  status: 'idle',
-};
-
-export const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
+export const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    user: {uid:"", photoUrl:"", displayName:""}
+  },
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     increment: (state) => {
