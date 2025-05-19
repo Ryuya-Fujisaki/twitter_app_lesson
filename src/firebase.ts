@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import * as firebase from "firebase/app";
+// import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
@@ -14,3 +15,11 @@ const firebaseConfig = {
   appId: "1:881732125564:web:e4f70faaa2b0f9ace31af9",
   measurementId: "G-082Y4LE0QH"
 };
+
+// Initialize Firebase
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+export const db = firebaseApp.firestore();
+export const auth = firebase.auth();
+export const storage = firebase.storage();
+export const provider = new firebase.auth.GoogleAuthProvider();
