@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignInSide() {
+const Auth: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -128,4 +128,5 @@ export default function SignInSide() {
             </Grid>
         </Grid>
     );
-}
+};
+export default Auth;
