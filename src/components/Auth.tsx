@@ -59,13 +59,32 @@ const Auth: React.FC = () => {
     const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [avatarImage, setAvatarImage] = useState<File | null>(null);
     const [isLogin, setIsLogin] = useState(true);
+    const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files![0]) {
+            setAvatarImage(e.target.files![0]);
+            e.target.value = "";
+        }
+    };
 
     const signInEmail = async () => {
         await auth.signInWithEmailAndPassword(email, password);
     };
     const signUpEmail = async () => {
-        await auth.createUserWithEmailAndPassword(email, password);
+        const authUser = await auth.createUserWithEmailAndPassword(email, password);
+        let url = "";
+        if (avatarImage) {
+            const S =
+                "abcdefghijklmnopqrstuvxxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const N = 16;
+
+
+            await storage.ref(`avatars/${fileName}`).put(avatarImage);
+            url = await storage.ref("avatars").child(fileName).getDownloadURL();
+
+        }
     };
 
     const signInGoogle = async () => {
@@ -115,24 +134,49 @@ const Auth: React.FC = () => {
                             }}
                         />
                         < Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            startIcon={<EmailIcon />}
+                            onClick={
+                                isLogin
+                                    ? async () => {
+                                        try {
+                                            await signInEmail();
+                                        } catch (err) {
+                                            if (err instanceof Error) {
+                                                alert(err.message);
+                                            } else {
+                                                alert("An unexpected error occurred");
+                                            }
+                                        }
+                                    }
+                                    : async () => {
+                                        try {
+                                            await signUpEmail();
+                                        } catch (err) {
+                                            if (err instanceof Error) {
+                                                alert(err.message);
+                                            } else {
+                                                alert("An unexpected error occurred");
+                                            }
+                                        }
+                                    }
+                            }
                         >
                             {isLogin ? "Login" : "Register"}
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <span>Forgot password?</span>
+                                <span className={styles.login_reset}>Forgot password?</span>
                             </Grid>
-                            <Grid item xs>
+                            <Grid item>
                                 <span
                                     className={styles.login_toggleMode}
                                     onClick={() => setIsLogin(!isLogin)}
                                 >
-                                    {!isLogin ? "Create new account ?" : "Back to login"}</span>
+                                    {isLogin ? "Create new account ?" : "Back to login"}</span>
                             </Grid>
                         </Grid>
                         <Button
