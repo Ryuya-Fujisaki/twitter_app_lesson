@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(https://images.unsplash.com/photo-1591372347242-510eff31d373?q=80&w=2730&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: '75% auto',
+        backgroundPosition: 'center 40%',
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Auth: React.FC = () => {
     const classes = useStyles();
-
+    const signInGoogle = async () => {
+        await auth.signInWithPopup(provider).catch((err) => alert(err.message));
+    };
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -101,6 +103,16 @@ const Auth: React.FC = () => {
                             className={classes.submit}
                         >
                             Sign In
+                        </Button>
+
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={signInGoogle}
+                        >
+                            SignIn with Google
                         </Button>
 
                     </form>
