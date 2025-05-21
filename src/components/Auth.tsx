@@ -17,7 +17,8 @@ import {
     Grid,
     Typography,
     makeStyles,
-    IconButton
+    IconButton,
+    Modal
 } from "@material-ui/core";
 
 import SendIcon from "@material-ui/icons/Send";
@@ -289,8 +290,28 @@ const Auth: React.FC = () => {
                         >
                             SignIn with Google
                         </Button>
-
                     </form>
+                    <Modal open={openModal} onClose={() => setOpenModal(false)}>
+                        <div style={getModalStyle()} className={classes.modal}>
+                            <div className={styles.login_modal}>
+                                <TextField
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    type="email"
+                                    name="email"
+                                    label="Reset E-mail"
+                                    value={resetEmail}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        setResetEmail(e.target.value);
+                                    }}
+                                />
+                                <IconButton onClick={sendResetEmail}>
+                                    <SendIcon />
+                                </IconButton>
+                            </div>
+                        </div>
+                    </Modal>
                 </div>
             </Grid>
         </Grid >
