@@ -26,7 +26,6 @@ import CameraIcon from "@material-ui/icons/Camera";
 import EmailIcon from "@material-ui/icons/Email";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -42,13 +41,22 @@ const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
     },
+    modal: {
+        outline: "none",
+        position: "absolute",
+        width: 400,
+        borderRadius: 10,
+        backgroudnColor: "white",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(10),
+    },
     image: {
         backgroundImage: 'url(https://images.unsplash.com/photo-1591372347242-510eff31d373?q=80&w=2730&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-        backgroundSize: '75% auto',
-        backgroundPosition: 'center 40%',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -67,15 +75,6 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    modal: {
-        outline: "none",
-        position: "absolute",
-        width: 400,
-        borderRadius: 10,
-        backgroundColor: "white",
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(10),
-    },
 }));
 
 const Auth: React.FC = () => {
@@ -88,7 +87,12 @@ const Auth: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [openModal, setOpenModal] = React.useState(false);
     const [resetEmail, setResetEmail] = useState("");
-
+    const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files![0]) {
+            setAvatarImage(e.target.files![0]);
+            e.target.value = "";
+        }
+    };
     const sendResetEmail = async (e: React.MouseEvent<HTMLElement>) => {
         await auth
             .sendPasswordResetEmail(resetEmail)
@@ -101,14 +105,9 @@ const Auth: React.FC = () => {
                 setResetEmail("");
             });
     };
-
-    const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files![0]) {
-            setAvatarImage(e.target.files![0]);
-            e.target.value = "";
-        }
+    const signInGoogle = async () => {
+        await auth.signInWithPopup(provider).catch((err) => alert(err.message));
     };
-
     const signInEmail = async () => {
         await auth.signInWithEmailAndPassword(email, password);
     };
@@ -139,9 +138,6 @@ const Auth: React.FC = () => {
         );
     };
 
-    const signInGoogle = async () => {
-        await auth.signInWithPopup(provider).catch((err) => alert(err.message));
-    };
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -193,7 +189,6 @@ const Auth: React.FC = () => {
                             </Box>
                         </>
                         )}
-
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -233,7 +228,7 @@ const Auth: React.FC = () => {
                             }
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="default"
                             className={classes.submit}
                             startIcon={<EmailIcon />}
                             onClick={
@@ -266,12 +261,7 @@ const Auth: React.FC = () => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <span
-                                    className={styles.login_reset}
-                                    onClick={() => setOpenModal(true)}
-                                >
-                                    Forgot password?
-                                </span>
+                                <span className={styles.login_reset}>Forgot password?</span>
                             </Grid>
                             <Grid item>
                                 <span
@@ -291,6 +281,7 @@ const Auth: React.FC = () => {
                             SignIn with Google
                         </Button>
                     </form>
+
                     <Modal open={openModal} onClose={() => setOpenModal(false)}>
                         <div style={getModalStyle()} className={classes.modal}>
                             <div className={styles.login_modal}>
@@ -317,4 +308,4 @@ const Auth: React.FC = () => {
         </Grid >
     );
 };
-export default Auth;
+export default Auth;              
