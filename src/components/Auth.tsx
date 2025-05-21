@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         width: 400,
         borderRadius: 10,
-        backgroudnColor: "white",
+        backgroudColor: "white",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(10),
     },
@@ -261,7 +261,16 @@ const Auth: React.FC = () => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <span className={styles.login_reset}>Forgot password?</span>
+                                <span
+                                    className={styles.login_reset}
+                                    onClick={() => {
+                                        console.log('Clicked');
+                                        setOpenModal(true)
+
+                                    }}
+                                >
+                                    Forgot password?
+                                </span>
                             </Grid>
                             <Grid item>
                                 <span
