@@ -87,6 +87,10 @@ const Auth: React.FC = () => {
             await storage.ref(`avatars/${fileName}`).put(avatarImage);
             url = await storage.ref("avatars").child(fileName).getDownloadURL();
         }
+        await authUser.user?.updateProfile({
+            displayName: username,
+            photoURL: url,
+        });
     };
 
     const signInGoogle = async () => {
