@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from "./Auth.module.css";
 import { useDispatch } from "react-redux";
 import { auth, provider, storage } from "../firebase";
+import { updateUserProfile } from "../features/userSlice"
 
 import {
     Avatar,
