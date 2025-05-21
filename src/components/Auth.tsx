@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         width: 400,
         borderRadius: 10,
-        backgroudColor: "white",
+        backgroundColor: "white",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(10),
     },
@@ -228,7 +228,7 @@ const Auth: React.FC = () => {
                             }
                             fullWidth
                             variant="contained"
-                            color="default"
+                            color="primary"
                             className={classes.submit}
                             startIcon={<EmailIcon />}
                             onClick={
@@ -317,4 +317,4 @@ const Auth: React.FC = () => {
         </Grid >
     );
 };
-export default Auth;              
+export default Auth;
