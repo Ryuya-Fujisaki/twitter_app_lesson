@@ -55,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-        backgroundSize: 'cover',
+        backgroundSize: 'contain', //cover
         backgroundPosition: 'center',
+        height: '1000px', // 👈 limit the visible area
     },
     paper: {
         margin: theme.spacing(8, 4),
