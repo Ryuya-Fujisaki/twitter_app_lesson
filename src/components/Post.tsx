@@ -39,6 +39,11 @@ const Post: React.FC<PROPS> = (props) => {
                         <p>{props.text}</p>
                     </div>
                 </div>
+                {props.image && (
+                    <div className={styles.post_tweetImage}>
+                        <img src={props.image} alt="tweet" />
+                    </div>
+                )}
             </div>
         </div>
     )
